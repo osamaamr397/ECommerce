@@ -15,7 +15,7 @@ export class ProductDetailsComponent implements OnInit {
   /*the ! is the non-null assertion operator.
   tells typescript compiler to suspend strict null and undefined checks for a property
   */ 
-  constructor(private productService:ProductService,private route:ActivatedRoute, private cartService:CartService,) { }
+  constructor(private productService:ProductService,private route:ActivatedRoute, private cartService:CartService) { }
 
   ngOnInit(): void {
     this.route.paramMap.subscribe(()=>{
