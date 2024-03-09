@@ -7,6 +7,7 @@ import {
 } from "@angular/forms";
 import { State } from "@popperjs/core";
 import { Country } from "src/app/common/country";
+import { CartService } from "src/app/services/cart.service";
 import { Luv2ShopFormService } from "src/app/services/luv2-shop-form.service";
 import { Luv2ShopeValidators } from "src/app/validators/luv2-shope-validators";
 
@@ -26,10 +27,16 @@ export class CheckoutComponent implements OnInit {
   billingAddressStates: State[] = [];
   constructor(
     private formBuilder: FormBuilder,
-    private luv2ShopFormService: Luv2ShopFormService
+    private luv2ShopFormService: Luv2ShopFormService,
+    private cartService:CartService
   ) {}
 
   ngOnInit(): void {
+
+      //this to show totalprice and quantity in checkout.html
+    this.reviewCartDetails()
+
+
     this.checkoutFormGroup = this.formBuilder.group({
       customer: this.formBuilder.group({
         firstName: new FormControl("", [
@@ -255,4 +262,16 @@ export class CheckoutComponent implements OnInit {
       formGroup?.get("state")?.setValue(data[0]);
     });
   }
+
+  reviewCartDetails(){
+    //subscribe  to cartService.totalQuantity
+    this.cartService.totalQuantity.subscribe(
+      totalQuantity=>this.totalQuantity=totalQuantity
+    );
+    //subscribe to cartService.totalPrice
+    this.cartService.totalPrice.subscribe(
+      totalPrice=>this.totalPrice=totalPrice
+    );
+  }
+
 }
